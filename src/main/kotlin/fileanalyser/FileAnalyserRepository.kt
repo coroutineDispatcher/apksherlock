@@ -14,7 +14,7 @@ class FileAnalyserRepository(private val chosenDir: File) {
         suspend fun openFiles(dir: File): List<AnalyzingFile> {
             emit(Loading(dir.name))
 
-            if (dir.isFile) {
+            if (dir.isFile && dir.name.endsWith(".java")) {
                 val lines = withContext(Dispatchers.IO) { dir.readLines() }
                 data[dir.name] = lines
             }
