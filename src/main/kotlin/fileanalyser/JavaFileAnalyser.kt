@@ -17,6 +17,7 @@ fun JavaFileAnalyser(modifier: Modifier = Modifier, pickedDirectory: File, onErr
 
     val state = remember(pickedDirectory) { APKSherlockInjector.fileAnalyserState(pickedDirectory) }
     val javaAnalyserState = state.state.collectAsState()
+    val horizontalScroll = rememberScrollState(0)
 
     DisposableEffect(Unit) {
         onDispose {
@@ -26,7 +27,10 @@ fun JavaFileAnalyser(modifier: Modifier = Modifier, pickedDirectory: File, onErr
 
     when (val currentState = javaAnalyserState.value) {
         is JavaFileAnalyserState.State.Success -> {
-            LazyColumn(modifier = modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, top = 16.dp)) {
+            LazyColumn(
+                modifier = modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, top = 16.dp)
+                    .horizontalScroll(horizontalScroll)
+            ) {
                 currentState.data.forEach { analyzingFile ->
                     item {
                         Text(
@@ -47,7 +51,6 @@ fun JavaFileAnalyser(modifier: Modifier = Modifier, pickedDirectory: File, onErr
                                     currentModifier.padding(2.dp).background(color = Color.Blue)
                                 else currentModifier
                             }
-                            // TODO horizontal scroll ?
                         )
                     }
 
@@ -62,7 +65,12 @@ fun JavaFileAnalyser(modifier: Modifier = Modifier, pickedDirectory: File, onErr
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text("${currentState.fileName}...", color = Color.White, fontWeight = FontWeight.ExtraBold, fontSize = 32.sp)
+                Text(
+                    "${currentState.fileName}...",
+                    color = Color.White,
+                    fontWeight = FontWeight.ExtraBold,
+                    fontSize = 32.sp
+                )
             }
         }
 
@@ -76,9 +84,9 @@ fun JavaFileAnalyser(modifier: Modifier = Modifier, pickedDirectory: File, onErr
                     { onError() },
                     colors = ButtonDefaults.buttonColors(contentColor = Color.Black, backgroundColor = Color.Yellow)
                 ) {
-                    Text("Retry", color = Color.White)
+                    Text("Retry", color = Color.Black)
                 }
-                Text("Something went wrong. Try again.", color = Color.White)
+                Text("Something went wrong or no Java files in this directory. Try again.", color = Color.White)
             }
         }
     }

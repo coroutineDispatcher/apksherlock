@@ -33,6 +33,7 @@ fun main() = application {
                 onCloseRequest = { applicationState.update(ApplicationState.Screens.JavaFolderPicker) },
                 title = "${latestState.directory}",
                 state = mainAppWindowState
+                // TODO add Find in Page feature
             ) {
                 Box(modifier = Modifier.fillMaxSize().background(color = Color.DarkGray)) {
                     JavaFileAnalyser(pickedDirectory = latestState.directory, onError = {
