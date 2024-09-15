@@ -55,7 +55,7 @@ fun JavaFolderPickerScreen(
 
 fun pickDirectory(): File? {
     val chooser = JFileChooser()
-    chooser.fileSelectionMode = JFileChooser.DIRECTORIES_ONLY
+    chooser.fileSelectionMode = JFileChooser.FILES_AND_DIRECTORIES
     val result = chooser.showOpenDialog(null)
     return if (result == JFileChooser.APPROVE_OPTION) {
         chooser.selectedFile

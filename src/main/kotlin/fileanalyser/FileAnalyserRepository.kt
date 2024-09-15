@@ -14,8 +14,6 @@ class FileAnalyserRepository(private val chosenDir: File) {
 
     fun readAllTheFiles() =
         flow {
-            data.clear()
-
             suspend fun openFiles(dir: File): List<AnalyzingFile> {
                 emit(Loading(dir.name))
 

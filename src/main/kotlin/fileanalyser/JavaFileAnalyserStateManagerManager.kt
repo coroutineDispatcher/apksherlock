@@ -1,6 +1,6 @@
 package fileanalyser
 
-import BaseState
+import BaseStateManager
 import data.AnalyzingFile
 import data.FilesCollection
 import data.Loading
@@ -8,19 +8,17 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
-class JavaFileAnalyserState(
+class JavaFileAnalyserStateManagerManager(
     repository: FileAnalyserRepository,
-) : BaseState() {
+) : BaseStateManager() {
     val state =
         repository.readAllTheFiles().map { result ->
             when (result) {
                 is FilesCollection -> {
-                    val data = result.analyzingFiles
-
-                    if (data.isEmpty()) {
+                    if (result.analyzingFiles.isEmpty()) {
                         State.Failure
                     } else {
-                        State.Success(data)
+                        State.Success(result.analyzingFiles)
                     }
                 }
 

@@ -34,13 +34,13 @@ fun JavaFileAnalyserScreen(
     pickedDirectory: File,
     onError: () -> Unit,
 ) {
-    val state = remember(pickedDirectory) { APKSherlockInjector.fileAnalyserState(pickedDirectory) }
+    val state = remember(pickedDirectory) { APKSherlockInjector.fileAnalyserStateManager(pickedDirectory) }
     val javaAnalyserState = state.state.collectAsState()
     val horizontalScroll = rememberScrollState(0)
 
     Column(modifier = modifier.fillMaxSize()) {
         when (val currentState = javaAnalyserState.value) {
-            is JavaFileAnalyserState.State.Success -> {
+            is JavaFileAnalyserStateManagerManager.State.Success -> {
                 LazyColumn(
                     modifier =
                         Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, top = 16.dp)
@@ -63,7 +63,7 @@ fun JavaFileAnalyserScreen(
                                 fontWeight = FontWeight.Medium,
                                 modifier =
                                     Modifier.let { currentModifier ->
-                                        if (line.shouldHighlight) {
+                                        if (line.matchesPatterns) {
                                             currentModifier.padding(2.dp).background(color = Color.Blue)
                                         } else {
                                             currentModifier
@@ -77,7 +77,7 @@ fun JavaFileAnalyserScreen(
                 }
             }
 
-            is JavaFileAnalyserState.State.Loading -> {
+            is JavaFileAnalyserStateManagerManager.State.Loading -> {
                 Column(
                     modifier = modifier.fillMaxSize().padding(8.dp),
                     verticalArrangement = Arrangement.Center,
@@ -99,7 +99,7 @@ fun JavaFileAnalyserScreen(
                 }
             }
 
-            JavaFileAnalyserState.State.Failure -> {
+            JavaFileAnalyserStateManagerManager.State.Failure -> {
                 Column(
                     modifier = modifier.fillMaxSize().padding(8.dp),
                     verticalArrangement = Arrangement.Center,

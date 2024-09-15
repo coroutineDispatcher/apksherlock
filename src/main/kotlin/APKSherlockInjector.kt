@@ -1,9 +1,8 @@
 import fileanalyser.FileAnalyserRepository
-import fileanalyser.JavaFileAnalyserState
+import fileanalyser.JavaFileAnalyserStateManagerManager
 import java.io.File
 
 object APKSherlockInjector {
     private fun fileAnalyserRepository(dir: File) = FileAnalyserRepository(dir)
-
-    fun fileAnalyserState(dir: File) = JavaFileAnalyserState(fileAnalyserRepository(dir))
+    fun fileAnalyserStateManager(dir: File) = JavaFileAnalyserStateManagerManager(fileAnalyserRepository(dir))
 }
