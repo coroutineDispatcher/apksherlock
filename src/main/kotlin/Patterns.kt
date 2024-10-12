@@ -6,4 +6,6 @@ val patterns =
         Regex("\\bsetAllowFileAccessFromFileURLs\\s*\\(.*?\\)"),
         Regex("\\bsetAllowFileAccessFromFileURLs\\s*\\(.*?\\)"),
         Regex("\\bsetAllowUniversalAccessFromFileURLs\\s*\\(.*?\\)"),
+        Regex(".*flag.*"),
+        Regex("\\bSystem\\.loadLibrary\\s*\\(\\s*\".*?\"\\s*\\)")
     )
